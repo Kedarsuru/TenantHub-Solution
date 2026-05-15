@@ -1,1 +1,35 @@
+name: PR Infra Diff
 
+on:
+  pull_request:
+
+jobs:
+  diff:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Kustomize
+        run: |
+          curl -s https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh | bash
+
+      - name: Build Main Branch
+        run: |
+          git fetch origin main
+          git checkout origin/main
+          kustomize build . > /tmp/main.yaml
+
+      - name: Build PR Branch
+        run: |
+          git checkout ${{ github.head_ref }}
+          kustomize build . > /tmp/pr.yaml
+
+      - name: Generate Diff
+        run: |
+          diff -u /tmp/main.yaml /tmp/pr.yaml > diff.txt || true
+
+      - name: Comment PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          path: diff.txt
