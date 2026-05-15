@@ -2,6 +2,7 @@
 
 # TenantHub — Multi-Tenant SaaS Platform (DevOps Assignment)
 
+
 ## Overview
 
 This repository contains a complete DevOps/Platform Engineering solution for a multi-tenant SaaS system running on a shared Kubernetes (GKE) cluster.
@@ -125,4 +126,4 @@ In a real SaaS environment, this system would be extended with:
 - Centralized logging and audit trails
 ---
 
-## Repository Structure
+
