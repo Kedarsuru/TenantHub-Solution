@@ -1,1 +1,45 @@
+Terraform used the selected providers to generate the following execution plan.
+Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # module.tenant_databases["acme-corp"].random_password.db_password will be created
+  + resource "random_password" "db_password" {
+      + bcrypt_hash = (sensitive value)
+      + id          = (known after apply)
+      + length      = 20
+      + lower       = true
+      + min_lower   = 0
+      + min_numeric = 0
+      + min_special = 0
+      + min_upper   = 0
+      + number      = true
+      + result      = (sensitive value)
+      + special     = true
+      + upper       = true
+    }
+
+  # module.tenant_databases["acme-corp"].google_sql_database.tenant_database will be created
+  + resource "google_sql_database" "tenant_database" {
+      + charset  = (known after apply)
+      + collation = (known after apply)
+      + id       = (known after apply)
+      + instance = "shared-postgres-instance"
+      + name     = "acme_corp_db"
+      + project  = (known after apply)
+    }
+
+  # module.tenant_databases["acme-corp"].google_sql_user.tenant_user will be created
+  + resource "google_sql_user" "tenant_user" {
+      + host     = (known after apply)
+      + id       = (known after apply)
+      + instance = "shared-postgres-instance"
+      + name     = "acme_corp_user"
+      + password = (sensitive value)
+      + project  = (known after apply)
+    }
+
+Plan: 3 to add, 0 to change, 0 to destroy.
+
 
