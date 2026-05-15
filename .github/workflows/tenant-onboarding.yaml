@@ -1,1 +1,41 @@
+name: Tenant Onboarding
 
+on:
+  push:
+    paths:
+      - tenants.yaml
+
+jobs:
+  onboard-tenant:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        working-directory: task1/terraform
+        run: terraform init
+
+      - name: Terraform Plan
+        working-directory: task1/terraform
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Apply
+        working-directory: task1/terraform
+        run: terraform apply -auto-approve tfplan
+
+      - name: Apply Kubernetes Manifests
+        run: |
+          kubectl apply -f task1/kubernetes/acme-corp/
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          title: "Tenant onboarding: acme-corp"
+          branch: tenant-onboarding/acme-corp
