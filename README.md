@@ -5,44 +5,54 @@
 
 ## Overview
 
+```text
 .
 ├── .github
 │   └── workflows
 │       ├── pr-diff.yaml
 │       └── tenant-onboarding.yaml
+│
 ├── Task2
 │   ├── kubernetes
 │   │   └── acme-corp
 │   │       ├── externalsecret.yaml
 │   │       ├── networkpolicy.yaml
 │   │       └── serviceaccount-patch.yaml
+│   │
 │   ├── terraform
 │   │   └── secret-manager.tf
+│   │
 │   └── README.md
+│
 ├── Task3
 │   ├── argocd
 │   │   ├── workflows
 │   │   │   └── pr-diff.yaml
+│   │   │
 │   │   └── argocd-notifications-cm.yaml
+│   │
 │   ├── README.md
 │   └── kustomizeoutput.txt
-├── task1
-│   ├── kubernetes
-│   │   └── acme-corp
-│   │       ├── namespace.yaml
-│   │       ├── role.yaml
-│   │       ├── rolebinding.yaml
-│   │       └── serviceaccount.yaml
-│   ├── terraform
-│   │   ├── modules
-│   │   │   └── tenant-db
-│   │   │       ├── main.tf
-│   │   │       ├── outputs.tf
-│   │   │       ├── providers.tf
-│   │   │       ├── terraform.tfvars
-│   │   │       └── variables.tf
-│   └── README.md
-
+│
+└── task1
+    ├── kubernetes
+    │   └── acme-corp
+    │       ├── namespace.yaml
+    │       ├── role.yaml
+    │       ├── rolebinding.yaml
+    │       └── serviceaccount.yaml
+    │
+    ├── terraform
+    │   └── modules
+    │       └── tenant-db
+    │           ├── main.tf
+    │           ├── outputs.tf
+    │           ├── providers.tf
+    │           ├── terraform.tfvars
+    │           └── variables.tf
+    │
+    └── README.md
+```
 
 This repository contains a complete DevOps/Platform Engineering solution for a multi-tenant SaaS system running on a shared Kubernetes (GKE) cluster.
 
