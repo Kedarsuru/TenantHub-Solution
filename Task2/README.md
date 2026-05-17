@@ -1,19 +1,58 @@
-Scoping Secret Manager access to a single secret prevents lateral
-movement attacks in a shared multi-tenant environment.
 
-If a tenant workload or pod becomes compromised, the attacker can only
-retrieve that tenant's credentials instead of accessing secrets for all
-tenants in the project.
+---
 
-This follows least-privilege security principles and reduces blast radius.
+# 📄 `Task2`
 
+```md id="qpr6jl"
+# 🔐 Task 2 — Secret Isolation & Security
 
-NetworkPolicy alone is not sufficient for tenant isolation because it
-only controls network traffic between workloads.
+---
 
-Without IAM isolation, RBAC restrictions, and scoped secret access,
-a compromised workload could still access Kubernetes API resources or
-cloud secrets belonging to other tenants.
+# 📖 Objective
 
-True multi-tenant isolation requires defense in depth across network,
-identity, and secret-management layers.
+The goal of Task 2 is to improve tenant security and isolation in a shared Kubernetes cluster.
+
+Previously:
+- all tenants shared one Kubernetes Secret
+- any compromised pod could potentially access all tenant credentials
+
+This task introduces:
+- per-tenant secrets
+- Workload Identity
+- scoped IAM permissions
+- External Secrets Operator
+- NetworkPolicies
+
+The design follows:
+
+> Least Privilege + Defense in Depth
+
+---
+
+# 🧠 Problem Statement
+
+In a shared SaaS cluster:
+- tenants must not access each other’s credentials
+- workloads must not communicate freely
+- cloud access must be tightly scoped
+
+Without proper isolation:
+- cross-tenant data leakage becomes possible
+- compromised workloads can move laterally
+
+---
+
+# 🏗️ Security Architecture Flow
+
+```text
+Tenant Secret Stored in GCP Secret Manager
+                    ↓
+Google Service Account created
+                    ↓
+IAM access scoped to single secret
+                    ↓
+Kubernetes ServiceAccount mapped using Workload Identity
+                    ↓
+External Secrets Operator syncs secret into namespace
+                    ↓
+NetworkPolicy restricts tenant traffic
