@@ -1,4 +1,56 @@
-# Task 1 — Tenant Provisioning
+# 🚀 Task 1 — Tenant Provisioning
+
+---
+
+# 📖 Objective
+
+The goal of Task 1 is to automate onboarding of a new tenant (`acme-corp`) into a shared Kubernetes-based SaaS platform.
+
+This task provisions:
+
+- Dedicated PostgreSQL database
+- Dedicated PostgreSQL user
+- Kubernetes namespace
+- RBAC permissions
+- GitHub Actions onboarding workflow
+
+The entire flow is designed to be:
+
+- automated
+- repeatable
+- scalable
+- idempotent
+
+---
+
+# 🧠 Problem Statement
+
+In a multi-tenant SaaS platform, manually provisioning infrastructure for every customer is error-prone and difficult to scale.
+
+Problems with manual onboarding:
+- inconsistent configurations
+- duplicated resources
+- human mistakes
+- difficult scaling
+
+This task solves that problem using Infrastructure as Code and GitOps workflows.
+
+---
+
+# 🏗️ Architecture Flow
+
+```text
+Add tenant in tenants.yaml
+            ↓
+GitHub Actions triggers
+            ↓
+Terraform provisions DB + DB user
+            ↓
+Kubernetes namespace created
+            ↓
+RBAC permissions applied
+            ↓
+Tenant environment ready
 
 ## Idempotency
 
