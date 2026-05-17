@@ -1,4 +1,3 @@
-# 🚀 TenantHub — Multi-Tenant SaaS Platform (DevOps Assignment)
 
 ---
 
