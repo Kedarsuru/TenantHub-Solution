@@ -4,6 +4,211 @@
 
 ## 📖 Project Overview
 
+# 🚀 TenantHub — Multi-Tenant SaaS Platform (DevOps Assignment)
+
+---
+
+# 🗂️ Repository Structure
+
+```text
+📦 TenantHub-Repo
+├── ⚙️ .github
+│   └── 🔄 workflows
+│       ├── 📜 pr-diff.yaml
+│       └── 📜 tenant-onboarding.yaml
+│
+├── ☸️ Task2
+│   ├── ☸️ kubernetes
+│   │   └── 🏢 acme-corp
+│   │       ├── 🔐 externalsecret.yaml
+│   │       ├── 🌐 networkpolicy.yaml
+│   │       └── 👤 serviceaccount-patch.yaml
+│   │
+│   ├── 🌱 terraform
+│   │   └── 🔑 secret-manager.tf
+│   │
+│   └── 📘 README.md
+│
+├── 🚀 Task3
+│   ├── 🔁 argocd
+│   │   ├── 🔄 workflows
+│   │   │   └── 📜 pr-diff.yaml
+│   │   │
+│   │   └── 📢 argocd-notifications-cm.yaml
+│   │
+│   ├── 📘 README.md
+│   └── 📄 kustomizeoutput.txt
+│
+├── 🏗️ task1
+│   ├── ☸️ kubernetes
+│   │   └── 🏢 acme-corp
+│   │       ├── 📦 namespace.yaml
+│   │       ├── 🔒 role.yaml
+│   │       ├── 👥 rolebinding.yaml
+│   │       └── 👤 serviceaccount.yaml
+│   │
+│   ├── 🌱 terraform
+│   │   └── 🧩 modules
+│   │       └── 🗄️ tenant-db
+│   │           ├── ⚙️ main.tf
+│   │           ├── 📤 outputs.tf
+│   │           ├── 🔌 providers.tf
+│   │           ├── 📝 terraform.tfvars
+│   │           └── 📥 variables.tf
+│   │
+│   └── 📘 README.md
+│
+└── 📘 README.md
+```
+
+---
+
+# 📖 Overview
+
+This repository contains a complete **DevOps / Platform Engineering solution** for a **multi-tenant SaaS platform** running on a shared Kubernetes (GKE) cluster.
+
+Each tenant (e.g. `acme-corp`) is provisioned with:
+
+- 🗄️ Dedicated PostgreSQL database inside a shared Cloud SQL instance
+- 👤 Dedicated database user
+- ☸️ Isolated Kubernetes namespace
+- 🔒 RBAC-based access control
+- 🔑 Per-tenant secrets in GCP Secret Manager
+- 🪪 Workload Identity-based authentication
+- 🌐 Network-level isolation using Kubernetes NetworkPolicies
+
+The platform is fully automated using:
+
+- 🌱 Terraform (Infrastructure as Code)
+- ☸️ Kubernetes manifests
+- 🔄 GitHub Actions (CI/CD Automation)
+- 🚀 ArgoCD Notifications (GitOps Observability)
+- 🧩 Kustomize (Manifest Rendering & Diffing)
+
+---
+
+# 🏛️ Architecture Summary
+
+The platform follows a **multi-layer tenant isolation model**:
+
+| Layer | Technology |
+|---|---|
+| 🪪 Identity Layer | Workload Identity + GCP Service Accounts |
+| 🔑 Secrets Layer | GCP Secret Manager |
+| ☸️ Compute Layer | Kubernetes Namespaces |
+| 🌐 Network Layer | Kubernetes NetworkPolicies |
+| 🌱 Infrastructure Layer | Terraform-managed Cloud SQL |
+
+---
+
+# 🏗️ Task 1 — Tenant Provisioning
+
+Automates onboarding of new tenants.
+
+### ✅ Features
+
+- 🗄️ Creates PostgreSQL database + user
+- ☸️ Creates isolated Kubernetes namespace
+- 🔒 Configures RBAC permissions
+- 🔄 GitHub Actions-driven provisioning
+- 🌱 Terraform state-based idempotency
+
+### 🔁 Key Property: Idempotency
+
+If provisioning runs multiple times:
+
+- ✅ Terraform detects existing resources
+- ✅ Kubernetes reconciles desired state
+- ✅ No duplicate resources are created
+
+---
+
+# 🔐 Task 2 — Secret Isolation & Security
+
+Implements strong tenant-level security controls.
+
+### ✅ Features
+
+- 🔑 Dedicated Secret Manager secret per tenant
+- 🪪 Workload Identity authentication
+- 🔒 Least-privilege IAM permissions
+- ☸️ External Secrets Operator integration
+- 🌐 Restricted egress using NetworkPolicies
+
+### 🛡️ Security Model
+
+This prevents:
+
+- ❌ Cross-tenant secret access
+- ❌ Unauthorized database connectivity
+- ❌ Broad IAM permissions
+- ❌ Shared namespace risks
+
+---
+
+# 🚀 Task 3 — Infrastructure Change Visibility
+
+Improves deployment safety and GitOps observability.
+
+## 🔍 PR Diff Workflow
+
+- 🧩 Runs `kustomize build`
+- 🔄 Compares manifests between PR and main branch
+- 💬 Posts rendered diff directly in Pull Requests
+
+## 📢 ArgoCD Notifications
+
+Sends Slack alerts when applications become:
+
+- ⚠️ Degraded
+- 🔄 OutOfSync
+
+Includes:
+
+- 📦 Application Name
+- 🌍 Environment
+- 🔗 ArgoCD Dashboard Link
+
+---
+
+# 📈 Scalability
+
+Designed to scale for **50+ tenants**.
+
+### ⚡ Scalability Features
+
+- 🌱 Terraform `for_each`
+- 📄 Centralized `tenants.yaml`
+- 🧩 Reusable modules
+- ☸️ Declarative Kubernetes manifests
+- 🔄 Reusable GitHub workflows
+
+---
+
+# 🧠 Key Design Principles
+
+- 🌱 Infrastructure as Code
+- 🔄 GitOps Automation
+- 🔒 Least Privilege Security
+- ☸️ Strong Tenant Isolation
+- ♻️ Fully Idempotent Pipelines
+- 📊 Production-grade Observability
+
+---
+
+# 🚧 Production Enhancements
+
+In a real production SaaS platform, this can be extended with:
+
+- ☁️ Remote Terraform Backend (GCS + Locking)
+- 🔄 Secret Rotation Policies
+- 🌍 Multi-environment Deployments
+- 🛡️ Policy-as-Code (OPA / Kyverno)
+- 📊 Centralized Logging & Audit Trails
+- 🚨 Advanced Monitoring & Alerting
+
+---
+
 This repository contains a complete DevOps / Platform Engineering solution for a multi-tenant SaaS platform running on a shared Kubernetes (GKE) cluster.
 
 The system automates:
