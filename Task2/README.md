@@ -44,7 +44,6 @@ Without proper isolation:
 
 # 🏗️ Security Architecture Flow
 
-```text
 Tenant Secret Stored in GCP Secret Manager
                     ↓
 Google Service Account created
